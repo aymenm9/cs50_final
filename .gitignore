@@ -185,3 +185,4 @@ instance/
 
 # config file
 config.py
+cs50_env
