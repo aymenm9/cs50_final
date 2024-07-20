@@ -3,7 +3,7 @@ from flask import session, redirect, render_template, request, url_for
 from .db import db
 from functools import wraps
 
-def singup(username, email, password):
+def singup_user(username, email, password):
 
     error = {
         'error' : False, 'username' : False, 'password' : False, 'email' : False
@@ -21,10 +21,10 @@ def singup(username, email, password):
         error['username'] = True
         return error
 
-    db.execute("INSERT INTO users (username, email, hash) VALUES(?, ?, ?)", username, email, generate_password_hash(password))
+    db.execute("INSERT INTO users (username, email, password) VALUES(?, ?, ?)", username, email, generate_password_hash(password))
     return error 
 
-def login(username, password):
+def login_user(username, password):
 
     error = {
         'error' : False, 'username' : False, 'password' : False
@@ -42,7 +42,7 @@ def login(username, password):
         error['error'] = True
         error['username'] = True
         return error
-    if not check_password_hash(user["hash"], password):
+    if not check_password_hash(user["password"], password):
         error['error'] = True
         error['password'] = True
         return error

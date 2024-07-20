@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, session, url_for, Blueprint
-from project import db, login, login_required
+from project import db, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 
 

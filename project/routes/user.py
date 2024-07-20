@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, session, url_for, Blueprint
-from project import db, login, login_required, singup, htmx_required
+from project import db, login_user, login_required, singup_user, htmx_required
 from werkzeug.security import generate_password_hash, check_password_hash
 
 user_bp = Blueprint("user", __name__, url_prefix="/")
@@ -13,6 +13,13 @@ def singup():
 
         username = request.form.get("username")
         password = request.form.get("password")
+        email = request.form.get("email")
+
+        error = singup_user(username, email, password)
+        if not error['error']:
+            return redirect (url_for("home.home"))
+
+        return render_template("singup.html", error=error)
 
 
     return render_template("singup.html")
@@ -27,10 +34,17 @@ def login():
         username = request.form.get("username")
         password = request.form.get("password")
 
-        error = login(username, password)
+        error = login_user(username, password)
         if not error['error']:
-            return redirect(url_for("user.home"))
+            return redirect(url_for("home.home"))
 
         return render_template("login.html", error=error)
 
     return render_template("login.html")
+
+
+@user_bp.route("/logout", methods=["POST"])
+@login_required
+def logout():
+    session.clear()
+    return redirect(url_for("home.home"))
