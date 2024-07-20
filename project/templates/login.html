@@ -1,17 +1,24 @@
-<div class="card-body">
-    <h3 class="card-title pb-3">Login</h3>
-    <div>
-        <form hx-post="/login" hx-on="htmx:afterOnLoad" class="pb-3">
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username">
+<div class="container">
+    <div class=" row justify-content-center" style="margin-top:12rem;">
+        <div class="card col-10 col-sm-8 col-md-6" id="auth_card">
+            <div class="card-body">
+                <h3 class="card-title pb-3">Login</h3>
+                <div>
+                    <form hx-post="/login" hx-target="#main" class="pb-3">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+                </div>
+                <p>Don't have an account? <button hx-get="/singup" hx-target="#main" hx-swap="innerHTML" hx-push-url="/singup"
+                        class="text-primary">Singup</button></p>
             </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password">
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
+        </div>
     </div>
-    <p>Don't have an account? <button hx-get="/singup" hx-target="#auth_card" hx-swap="innerHTML" class="text-primary">Singup</button></p>
-  </div>
+</div>
