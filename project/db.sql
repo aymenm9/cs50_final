@@ -16,13 +16,6 @@ CREATE TABLE IF NOT EXISTS programs (
     completed INTEGER NOT NULL
 );
 
--- week table
-CREATE TABLE IF NOT EXISTS weeks (
-    id INTEGER PRIMARY KEY,
-    week INTEGER NOT NULL,
-    completed INTEGER NOT NULL
-);
-
 -- workout table
 CREATE TABLE IF NOT EXISTS workouts (
     id INTEGER PRIMARY KEY,
@@ -46,20 +39,12 @@ CREATE TABLE IF NOT EXISTS user_programs (
     PRIMARY KEY (user_id, program_id)
 );
 
-CREATE TABLE IF NOT EXISTS program_weeks (
+CREATE TABLE IF NOT EXISTS program_workouts (
     program_id INTEGER NOT NULL,
-    week_id INTEGER NOT NULL,
-    FOREIGN KEY (program_id) REFERENCES programs(id),
-    FOREIGN KEY (week_id) REFERENCES weeks(id),
-    PRIMARY KEY (program_id, week_id)
-);
-
-CREATE TABLE IF NOT EXISTS week_workouts (
-    week_id INTEGER NOT NULL,
     workout_id INTEGER NOT NULL,
-    FOREIGN KEY (week_id) REFERENCES weeks(id),
+    FOREIGN KEY (program_id) REFERENCES programs(id),
     FOREIGN KEY (workout_id) REFERENCES workouts(id),
-    PRIMARY KEY (week_id, workout_id)
+    PRIMARY KEY (program_id, workout_id)
 );
 
 CREATE TABLE IF NOT EXISTS workout_exercises (
