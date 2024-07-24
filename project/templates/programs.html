@@ -1,0 +1,78 @@
+<div class="container-fluid p-0 bg-dark" hx-push-url="/program" hx-trigger="load">
+
+    <div class="row justify-content-center py-5 m-0">
+
+        {% for program in programs %}
+        <div class="card col-10 col-sm-6 col-md-3 m-2  p-0">
+            <img src="/static/gym2.jpg" class="card-img-top img-fluid img-thumbnail " alt="workout img"
+                style="height: 18rem; width: 100%; object-fit: cover">
+            <div class="card-body px-4">
+                <div class="d-flex justify-content-between">
+                    <h5 class="card-title">{{program.name}}</h5>
+                    <span>
+                        <p class="lead">
+                        <strong>weeks:</strong>
+                        {{program.duration}}</p>
+                    </span>
+                </div>
+                <p class="card-text">{{program.description}}</p>
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn-primary">view detiles</button>
+                    {% if program.completed == 1 %}<i class="bi bi-check-circle-fill text-success"></i>{% else %}<i
+                        class="bi bi-check-circle-fill text-danger"></i>{% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="card col-10 col-sm-6 col-md-3 m-2 p-0">
+            <img src="/static/gym2.jpg" class="card-img-top img-fluid img-thumbnail " alt="workout img"
+                style="height: 18rem; width: 100%; object-fit: cover">
+            <div class="card-body px-4 d-flex justify-content-center align-content-center" type="button"
+                data-bs-toggle="modal" data-bs-target="#addProgramModal">
+                <i class="bi bi-plus-circle fs-1"></i>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="addProgramModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="addProgramModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content bg-dark text-light">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Program</h1>
+                        <button type="button" class="btn-close btn-light" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <form hx-post="/addprogram" hx-target="#main" hx-swap="innerHTML">
+                        <input type="hidden" name="page" value="program">
+                        <div class="modal-body">
+                            <div class="input-group mb-3 rounded-5">
+                                <span class="input-group-text" id="basic-addon1">Program name</span>
+                                <input type="text" class="form-control" name="program_name" aria-label="Program name"
+                                    aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3 rounded-5">
+                                <span class="input-group-text" id="basic-addon1">Program description</span>
+                                <input type="text" class="form-control" name="program_description"
+                                    aria-label="Program description" aria-describedby="basic-addon1">
+                            </div>
+                            <div class=" input-group mb-3 rounded-5">
+                                <span class="input-group-text" id="basic-addon1">Program Duration</span>
+                                <input type="number" class="form-control" name="program_duration"
+                                    aria-label="Program Duration" aria-describedby="basic-addon1">
+                                <span class="input-group-text" id="basic-addon1">week</span>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- ModalEnd -->
+
+    </div>
+</div>

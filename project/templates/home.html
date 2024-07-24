@@ -1,3 +1,122 @@
-<div class="container" hx-push-url="/home">
+<div class="container-fluid p-0" hx-push-url="/home">
+    <div class="bg-body">
+        <div class="row justify-content-center pt-5 m-0">
+            <img src="/static/user.png" alt="user image" class="col-5 col-sm-3 col-md-1 img-fluid">
+        </div>
+        <div class="row justify-content-center py-3 m-0">
+            <h1 class="col-6 col-sm-8 col-md-10 fs-1 text-center">Welcome {{session.get("username")}} !</h1>
+        </div>
+    </div>
+    <div class="row py-5 m-0"></div>
+    <div class=" bg-dark py-5">
+        <div class="row justify-content-around py-3 m-0">
+            <div class=" col-7 col-sm-5 col-md-4 card mb-4" type="button" data-bs-toggle="modal"
+                data-bs-target="#addProgramModal">
+                <div class="card-body bg-light d-flex justify-content-center py-5">
+                    <i class="bi bi-plus-circle fs-1"></i>
+                </div>
+                <div class="card-footer">
+                    <h4 class="card-title text-center ">Add Program</h4>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="addProgramModal" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="addProgramModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content bg-dark text-light">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Program</h1>
+                            <button type="button" class="btn-close btn-light" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <form hx-post="/addprogram" hx-target="#footer" hx-swap="afterbegin">
+                            <input type="hidden" name="page" value="home">
+                            <div class="modal-body">
+                                <div class="input-group mb-3 rounded-5">
+                                    <span class="input-group-text" id="basic-addon1">Program name</span>
+                                    <input type="text" class="form-control" name="program_name"
+                                        aria-label="Program name" aria-describedby="basic-addon1">
+                                </div>
+                                <div class="input-group mb-3 rounded-5">
+                                    <span class="input-group-text" id="basic-addon1">Program description</span>
+                                    <input type="text" class="form-control" name="program_description"
+                                        aria-label="Program description" aria-describedby="basic-addon1">
+                                </div>
+                                <div class=" input-group mb-3 rounded-5">
+                                    <span class="input-group-text" id="basic-addon1">Program Duration</span>
+                                    <input type="number" class="form-control" name="program_duration"
+                                        aria-label="Program Duration" aria-describedby="basic-addon1">
+                                    <span class="input-group-text" id="basic-addon1">week</span>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- ModalEnd -->
+
+
+            <div class=" col-7 col-sm-5 col-md-4 card mb-4" type="button" data-bs-toggle="modal"
+                data-bs-target="#addWorkoutModal">
+
+                <div class="card-body bg-light d-flex justify-content-center py-5">
+                    <i class="bi bi-plus-circle fs-1"></i>
+                </div>
+                <div class="card-footer">
+                    <h4 class="card-title text-center">Add Workout</h4>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="addWorkoutModal" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="addWorkoutModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content bg-dark text-light">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Workout</h1>
+                            <button type="button" class="btn-close btn-light" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <form hx-post="/addworkout">
+
+
+                            <div class="modal-body">
+                                <select name="program_id" id="pid" required class="form-select" hx-get="/getprograms"
+                                    hx-trigger="click" hx-swap="innerHTML">
+                                    <option disabled selected>--Select Program--</option>
+                                </select>
+                                <div class="input-group mb-3 rounded-5">
+                                    <span class="input-group-text" id="basic-addon1">Workout name</span>
+                                    <input type="text" class="form-control" name="workout_name"
+                                        aria-label="workout name" aria-describedby="basic-addon1" required>
+                                </div>
+                                <div class="bg-body-secondary border-light rounded-2 border-1">
+                                    <div class="row px-3 justify-content-between text-dark m-2" id="exercises">
+                                        <h5 class="text-dark pt-3 col-10">Exercises</h5>
+                                        <button hx-get="/addexercise" hx-target="#exercises" hx-swap="afterend"
+                                            class="col-2 p-0 border-0"><i class="bi bi-plus-circle fs-3"></i></button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- ModalEnd -->
+
+
+        </div>
+    </div>
 
 </div>

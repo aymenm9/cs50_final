@@ -44,6 +44,7 @@ def login():
 
 
 @user_bp.route("/logout", methods=["POST"])
+@htmx_required
 @login_required
 def logout():
     session.clear()

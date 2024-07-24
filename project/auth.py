@@ -22,6 +22,7 @@ def singup_user(username, email, password):
         return error
 
     db.execute("INSERT INTO users (username, email, password) VALUES(?, ?, ?)", username, email, generate_password_hash(password))
+    login_user(username, password)
     return error 
 
 def login_user(username, password):
@@ -48,6 +49,7 @@ def login_user(username, password):
         return error
     else :
         session["user_id"] = user["id"]
+        session["username"] = user["username"]
         return error
     
 def login_required(func):

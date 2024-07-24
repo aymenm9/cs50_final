@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, session
 from flask_session import Session
-from .routes import user_bp, home_bp
+from .routes import user_bp, home_bp, program_bp
 
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
@@ -9,6 +9,7 @@ Session(app)
 
 app.register_blueprint(user_bp)
 app.register_blueprint(home_bp)
+app.register_blueprint(program_bp)
 
 
 @app.route("/")
