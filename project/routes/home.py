@@ -20,3 +20,15 @@ def program():
     programs = db.execute("SELECT * FROM programs WHERE user_id = ?", session["user_id"])
     return render_template("programs.html", programs = programs)
 
+
+@home_bp.route("/workout")
+@login_required
+@htmx_required
+def workout():
+    workouts = db.execute("SELECT * FROM workouts WHERE program_id IN (SELECT id FROM programs WHERE user_id = ?)", session["user_id"])
+    for workout in workouts:
+        exercises = db.execute("SELECT * FROM exercises WHERE workout_id = ?", workout["id"])
+        workout["exercises"] = exercises
+        workout["exercises_count"] = len(exercises)
+    return render_template("workouts.html", workouts = workouts)
+

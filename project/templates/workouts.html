@@ -1,0 +1,79 @@
+<div class="container-fluid p-0 bg-dark" hx-push-url="/workout" hx-trigger="load">
+
+    <div class="row justify-content-center py-5 m-0">
+    {% for workout in workouts %}
+        <div class="card col-10 col-sm-6 col-md-3 m-2  p-0">
+            <img src="/static/gym2.jpg" class="card-img-top img-fluid img-thumbnail " alt="workout img"
+                style="height: 18rem; width: 100%; object-fit: cover">
+            <div class="card-body px-4">
+                <div class="d-flex justify-content-between">
+                    <h5 class="card-title">{{workout.name}}</h5>
+                    <span>
+                        <p class="lead">
+                        <strong>exercise:</strong>
+                        {{workout.exercises_count}}</p>
+                    </span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn-primary" hx-get="/getworkout?id={{workout.id}}" hx-target="#main" hx-swap="innerHTML" hx-push-url="/{{workout.name}}">view detiles</button>
+                    {% if workout.completed == 1 %}<i class="bi bi-check-circle-fill text-success fs-3"></i>{% else %}<i
+                        class="bi bi-check-circle-fill text-danger fs-3"></i>{% endif %}
+                </div>
+            </div>
+        </div>
+        
+    {% endfor %}
+        <div class="card col-10 col-sm-6 col-md-3 m-2 p-0">
+            <img src="/static/gym2.jpg" class="card-img-top img-fluid img-thumbnail " alt="workout img"
+                style="height: 18rem; width: 100%; object-fit: cover">
+            <div class="card-body px-4 d-flex justify-content-center align-content-center" type="button"
+                data-bs-toggle="modal" data-bs-target="#addWorkoutModal">
+                <i class="bi bi-plus-circle fs-1"></i>
+            </div>
+        </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="addWorkoutModal" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="addWorkoutModal" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content bg-dark text-light">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Workout</h1>
+                                <button type="button" class="btn-close btn-light" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <form hx-post="/addworkout" >
+    
+    
+                                <div class="modal-body">
+                                    <select name="program_id" id="pid" required class="form-select" hx-get="/getprograms"
+                                        hx-trigger="click" hx-swap="innerHTML">
+                                        <option disabled selected>--Select Program--</option>
+                                    </select>
+                                    <div class="input-group mb-3 rounded-5">
+                                        <span class="input-group-text" id="basic-addon1">Workout name</span>
+                                        <input type="text" class="form-control" name="workout_name"
+                                            aria-label="workout name" aria-describedby="basic-addon1" required>
+                                    </div>
+                                    <div class="bg-body-secondary border-light rounded-2 border-1">
+                                        <div class="row px-3 justify-content-between text-dark m-2" id="exercises">
+                                            <h5 class="text-dark pt-3 col-10">Exercises</h5>
+                                            <button hx-get="/addexercise" hx-target="#exercises" hx-swap="afterend"
+                                                class="col-2 p-0 border-0"><i class="bi bi-plus-circle fs-3"></i></button>
+                                        </div>
+    
+                                    </div>
+    
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- ModalEnd -->
+
+    </div>
+</div>

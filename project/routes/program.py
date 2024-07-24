@@ -56,6 +56,16 @@ def addworkout():
 
     return render_template("success.html", msg = "Workout added successfully!")
 
+@program_bp.route("/getworkout")
+@login_required
+@htmx_required
+def getworkouts():
+    workout_id = int (request.args.get("id"))
+    workout = db.execute("SELECT * FROM workouts WHERE id = ?", workout_id)[0]
+    exercises = db.execute("SELECT * FROM exercises WHERE workout_id = ?", workout_id)
+
+    return render_template("workout.html", workout = workout, exercises = exercises)
+
 
 
 @program_bp.route("/addexercise", methods=["GET","POST"])

@@ -1,0 +1,30 @@
+<div class="container bg-dark-subtle">
+<div class="row justify-content-start px-5"><button class="col-1 btn btn-danger" hx-get="/workout" hx-target="#main" hx-swap="innerHTML" hx-push-url="/workout"><i class="bi bi-arrow-bar-left"></i></button></div>
+<div class="row justify-content-center"> 
+<div id="workout" class="col-10 col-md-7 card bg-dark text-light">
+    <div class=" card-body">
+        <h5 class="card-title">Workout: {{workout.name}}</h5>
+            <p>Exercise: {{workout.exercises_count}}</p>
+            <p>Program: {{workout.program_name}}</p>
+        <div class=" row justify-content-start">
+                {% for exercise in exercises %}
+
+                <div class="card col-6 col-md-2 bg-black text-light">
+                    <div class=" card-body">
+                        <h6>Exercise: {{exercise.name}}</h6>
+                        <p class=" lead">Reps: {{exercise.reps}}</p>
+                    </div>
+                    <div class=" card-footer">{% if exercise.completed == 1 %}<button class="btn btn-light" hx-post="/done" hx-target="#workout" hx-swap="innerHTML"
+                            hx-vals="{'table': 'exercises', 'do': 'done', 'id': {{exercise.id}}}"> undone <i
+                                class="bi bi-check-circle-fill text-success fs-3"></i></button>{% else %}<button class="btn btn-light" hx-post="/done" hx-target="#workout" hx-swap="innerHTML"
+                                hx-vals="{'table': 'exercises', 'do': 'undone', 'id': {{exercise.id}}}"> done <i
+                            class="bi bi-check-circle-fill text-danger fs-3"></i></button>{% endif %}</div>
+                </div>
+
+                {% endfor %}
+            </div>
+    
+    </div>
+</div>
+</div>
+</div>
