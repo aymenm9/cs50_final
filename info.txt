@@ -1,0 +1,5 @@
+project’s title: Flask web-app WORKOUT TRACKER ;
+name: Merad Aymen El Hadi ;
+GitHub: aymenm9 and edX: aymen_m ;
+city: Setif and country: alger ;
+date of recording this video: 07/25/2024 ;

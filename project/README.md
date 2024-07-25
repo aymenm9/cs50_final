@@ -1,6 +1,3 @@
-# cs50
-cs50 finel project
-
 # web app WORKOUT TRACKER
 #### Video Demo:  <https://youtu.be/s82tZelXQPw>
 #### Description:
