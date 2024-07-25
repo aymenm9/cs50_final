@@ -1,0 +1,81 @@
+<div class="container bg-dark-subtle">
+    <div class="row justify-content-start px-5"><button class="col-1 btn btn-danger" hx-get="/program" hx-target="#main" hx-swap="innerHTML" hx-push-url="/program"><i class="bi bi-arrow-bar-left"></i></button></div>
+    <div class="row justify-content-center"> 
+    <div id="workout" class="col-10 col-md-7 card bg-dark text-light">
+        <div class=" card-body">
+            <h5 class="card-title">Program: {{program.name}}</h5>
+                <p>Description: {{program.description}}</p>
+                <p>weeks: {{program.duration}}</p>
+            <div class=" row justify-content-start">
+                <div class="container-fluid p-0 bg-dark">
+
+                    <div class="row justify-content-center py-5 m-0">
+                    {% for workout in workouts %}
+                        <div class="card col-4 col-sm-3 col-md-2 m-2  p-0">
+                            <div class="card-body px-4">
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="card-title">{{workout.name}}</h5>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <button class="btn btn-primary btn-sm" hx-get="/getworkout?id={{workout.id}}" hx-target="#main" hx-swap="innerHTML" hx-push-url="/{{workout.name}}">view detiles</button>
+                                    {% if workout.completed == 1 %}<i class="bi bi-check-circle-fill text-success fs-5"></i>{% else %}<i
+                                        class="bi bi-check-circle-fill text-danger fs-5"></i>{% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                    {% endfor %}
+                        <div class="card col-10 col-sm-6 col-md-3 m-2 p-0">
+                            <div class="card-body px-4 d-flex justify-content-center align-content-center" type="button"
+                                data-bs-toggle="modal" data-bs-target="#addWorkoutModal">
+                                <i class="bi bi-plus-circle fs-1"></i>
+                            </div>
+                        </div>
+                
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="addWorkoutModal" data-bs-backdrop="static" data-bs-keyboard="false"
+                                    tabindex="-1" aria-labelledby="addWorkoutModal" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content bg-dark text-light">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Workout</h1>
+                                                <button type="button" class="btn-close btn-light" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <form hx-post="/addworkout">
+                                                <div class="modal-body">
+                                                    <input type="hidden" name="program_id" value="{{program.id}}">
+                                                    <div class="input-group mb-3 rounded-5">
+                                                        <span class="input-group-text" id="basic-addon1">Workout name</span>
+                                                        <input type="text" class="form-control" name="workout_name"
+                                                            aria-label="workout name" aria-describedby="basic-addon1" required>
+                                                    </div>
+                                                    <div class="bg-body-secondary border-light rounded-2 border-1">
+                                                        <div class="row px-3 justify-content-between text-dark m-2" id="exercises">
+                                                            <h5 class="text-dark pt-3 col-10">Exercises</h5>
+                                                            <button hx-get="/addexercise" hx-target="#exercises" hx-swap="afterend"
+                                                                class="col-2 p-0 border-0"><i class="bi bi-plus-circle fs-3"></i></button>
+                                                        </div>
+                    
+                                                    </div>
+                    
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <input type="hidden" name="page" value="workout">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ModalEnd -->
+                
+                    </div>
+                </div>
+                </div>
+        
+        </div>
+    </div>
+    </div>
+    </div>

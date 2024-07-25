@@ -17,9 +17,10 @@
                 </div>
                 <p class="card-text">{{program.description}}</p>
                 <div class="d-flex justify-content-between">
-                    <button class="btn btn-primary">view detiles</button>
-                    {% if program.completed == 1 %}<i class="bi bi-check-circle-fill text-success fs-3"></i>{% else %}<i
-                        class="bi bi-check-circle-fill text-danger fs-3"></i>{% endif %}
+                    <button class="btn btn-primary" hx-get="/getprogram?id={{program.id}}" hx-target="#main" hx-swap="innerHTML" hx-push-url="/program">view detiles</button>
+                    
+                    {% if program.completed == 1 %}<i class="bi bi-check-circle-fill text-success fs-3" type="button" hx-get="/undone?id={{program.id}}&table=programs" hx-target="#main" hx-swap="innerHTML" hx-push-url="/program"></i>{% else %}<i
+                        class="bi bi-check-circle-fill text-danger fs-3" type="button" hx-get="/done?id={{program.id}}&table=programs" hx-target="#main" hx-swap="innerHTML" hx-push-url="/program"></i>{% endif %}
                 </div>
             </div>
         </div>

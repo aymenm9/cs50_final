@@ -18,6 +18,16 @@ def addprogram():
     elif request.form.get("page") == "program":
         return redirect("/program")
 
+@program_bp.route("/getprogram")
+@login_required
+@htmx_required
+def getprogram():
+    id = int(request.args.get("id"))
+    program = db.execute("SELECT * FROM programs WHERE id = ?", id)[0]
+    workouts = db.execute("SELECT * FROM workouts WHERE program_id = ?", program["id"])
+    return render_template("program.html", program = program, workouts = workouts)
+
+
 @program_bp.route("/getprograms")
 @login_required
 @htmx_required
@@ -32,12 +42,14 @@ def getprograms():
 @htmx_required
 @login_required
 def addworkout():
+    page = request.form.get("page") 
     name = request.form.get("workout_name")
     program_id = int(request.form.get("program_id"))
     workout_id = db.execute("INSERT INTO workouts (name, completed , program_id) VALUES(?, ?, ?)", name, False, program_id)
     exercises = request.form.to_dict()
     exercises.pop("workout_name")
     exercises.pop("program_id")
+    exercises.pop("page")
     exercises_name = dict()
     exercises_repetition = dict()
     for key in exercises:
@@ -54,6 +66,8 @@ def addworkout():
     for id in exercises_name:
         db.execute("INSERT INTO exercises (name, reps, completed, workout_id) VALUES(?, ?, ?, ?)", exercises_name[id], int(exercises_repetition[id]), False, workout_id)
 
+    if page == "workout":
+        return redirect("/workout")
     return render_template("success.html", msg = "Workout added successfully!")
 
 @program_bp.route("/getworkout")
@@ -76,3 +90,44 @@ def addexercise():
         ...
     uid = uuid.uuid4().hex
     return render_template("addexercise.html", uid = uid)
+
+
+@program_bp.route("/done")
+@htmx_required
+@login_required
+def done():
+    table = request.args.get("table")
+    id = int(request.args.get("id"))
+
+    if table not in ["exercises", "workouts", "programs"]:
+        return "error"
+    
+    db.execute("UPDATE ? SET completed = 1 WHERE id = ?",table, id)
+    
+    if table == "exercises":
+        workout_id = db.execute("SELECT workout_id FROM exercises WHERE id = ?", id)[0]["workout_id"]
+        return redirect("/getworkout?id=" + str(workout_id))
+    elif table == "workouts":
+        return redirect("/workout")
+    elif table == "programs":
+        return redirect("/program")
+
+@program_bp.route("/undone")
+@htmx_required
+@login_required
+def undone():
+    table = request.args.get("table")
+    id = int(request.args.get("id"))
+
+    if table not in ["exercises", "workouts", "programs"]:
+        return "error"
+    
+    db.execute("UPDATE ? SET completed = 0 WHERE id = ?",table, id)
+    
+    if table == "exercises":
+        workout_id = db.execute("SELECT workout_id FROM exercises WHERE id = ?", id)[0]["workout_id"]
+        return redirect("/getworkout?id=" + str(workout_id))
+    elif table == "workouts":
+        return redirect("/workout")
+    elif table == "programs":
+        return redirect("/program")

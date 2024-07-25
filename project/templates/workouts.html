@@ -16,8 +16,8 @@
                 </div>
                 <div class="d-flex justify-content-between">
                     <button class="btn btn-primary" hx-get="/getworkout?id={{workout.id}}" hx-target="#main" hx-swap="innerHTML" hx-push-url="/{{workout.name}}">view detiles</button>
-                    {% if workout.completed == 1 %}<i class="bi bi-check-circle-fill text-success fs-3"></i>{% else %}<i
-                        class="bi bi-check-circle-fill text-danger fs-3"></i>{% endif %}
+                    {% if workout.completed == 1 %}<i class="bi bi-check-circle-fill text-success fs-3" type="button" hx-get="/undone?id={{workout.id}}&table=workouts" hx-target="#main" hx-swap="innerHTML" hx-push-url="/workout"></i>{% else %}<i
+                        class="bi bi-check-circle-fill text-danger fs-3" type="button" hx-get="/done?id={{workout.id}}&table=workouts" hx-target="#main" hx-swap="innerHTML" hx-push-url="/workout"></i>{% endif %}
                 </div>
             </div>
         </div>
@@ -42,9 +42,7 @@
                                 <button type="button" class="btn-close btn-light" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <form hx-post="/addworkout" >
-    
-    
+                            <form hx-post="/addworkout">
                                 <div class="modal-body">
                                     <select name="program_id" id="pid" required class="form-select" hx-get="/getprograms"
                                         hx-trigger="click" hx-swap="innerHTML">
@@ -66,6 +64,7 @@
     
                                 </div>
                                 <div class="modal-footer">
+                                    <input type="hidden" name="page" value="workout">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add</button>
                                 </div>

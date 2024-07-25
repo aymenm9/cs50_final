@@ -14,10 +14,8 @@
                         <h6>Exercise: {{exercise.name}}</h6>
                         <p class=" lead">Reps: {{exercise.reps}}</p>
                     </div>
-                    <div class=" card-footer">{% if exercise.completed == 1 %}<button class="btn btn-light" hx-post="/done" hx-target="#workout" hx-swap="innerHTML"
-                            hx-vals="{'table': 'exercises', 'do': 'done', 'id': {{exercise.id}}}"> undone <i
-                                class="bi bi-check-circle-fill text-success fs-3"></i></button>{% else %}<button class="btn btn-light" hx-post="/done" hx-target="#workout" hx-swap="innerHTML"
-                                hx-vals="{'table': 'exercises', 'do': 'undone', 'id': {{exercise.id}}}"> done <i
+                    <div class=" card-footer">{% if exercise.completed == 1 %}<button class="btn btn-light" hx-get="/undone?id={{exercise.id}}&table=exercises" hx-target="#main" hx-swap="innerHTML" hx-push-url="/workout"> undone <i
+                                class="bi bi-check-circle-fill text-success fs-3"></i></button>{% else %}<button class="btn btn-light" hx-get="/done?id={{exercise.id}}&table=exercises" hx-target="#main" hx-swap="innerHTML" hx-push-url="/workout"> done <i
                             class="bi bi-check-circle-fill text-danger fs-3"></i></button>{% endif %}</div>
                 </div>
 

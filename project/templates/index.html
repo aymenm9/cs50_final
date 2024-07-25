@@ -22,9 +22,9 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                         <div class="navbar-nav ">
-                          <button class="nav-link active" hx-get="/home" hx-target="#main" hx-swap="innerHTML">Home</button>
+                          <button class="nav-link active" hx-get="/home" hx-target="#main" hx-swap="innerHTML" hx-push-url="/home">Home</button>
                           <button class="nav-link" hx-get="/program" hx-target="#main" hx-swap="innerHTML" hx-push-url="/program">Program</button>
-                          <button class="nav-link" hx-get="/workout" hx-target="#main" hx-swap="innerHTML">Workout</button>
+                          <button class="nav-link" hx-get="/workout" hx-target="#main" hx-swap="innerHTML" hx-push-url="/workout">Workout</button>
                           <button type="button" class="btn btn-danger bg-danger nav-link ms-5 px-4 text-white"  data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</button>
                           
                           <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModal" aria-hidden="true">
